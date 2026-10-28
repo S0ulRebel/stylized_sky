@@ -1,0 +1,25 @@
+; Engine configuration file.
+; Stylized Sky - a reusable stylized sky addon built with visual shaders.
+
+config_version=5
+
+[application]
+
+config/name="Stylized Sky"
+config/description="Reusable stylized sky addon authored with Godot visual shaders."
+run/main_scene="res://demo/sky_demo.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/stylized_sky/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

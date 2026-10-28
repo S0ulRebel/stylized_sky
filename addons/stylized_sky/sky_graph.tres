@@ -1,0 +1,9 @@
+[gd_resource type="VisualShader" format=3]
+
+[resource]
+resource_name = "Stylized Sky Graph"
+mode = 3
+flags/use_half_res_pass = false
+flags/use_quarter_res_pass = false
+flags/disable_fog = false
+flags/use_debanding = false
