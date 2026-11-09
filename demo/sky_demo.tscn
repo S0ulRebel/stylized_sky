@@ -1,35 +1,40 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://dn6g7nxignu5e"]
 
 [ext_resource type="Material" path="res://addons/stylized_sky/sky_material.tres" id="1_mat"]
+[ext_resource type="Shader" path="res://addons/stylized_sky/cloud.gdshader" id="2_e0gec"]
+[ext_resource type="Script" uid="uid://cvcynqdolu444" path="res://addons/stylized_sky/sky_controller.gd" id="3_controller"]
 
-[sub_resource type="Sky" id="Sky_demo"]
+[sub_resource type="Sky" id="Sky_oyseg"]
 sky_material = ExtResource("1_mat")
 
 [sub_resource type="Environment" id="Environment_demo"]
 background_mode = 2
-sky = SubResource("Sky_demo")
+sky = SubResource("Sky_oyseg")
 ambient_light_source = 3
 tonemap_mode = 2
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_sea"]
-size = Vector2(2000, 2000)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ry0t"]
+render_priority = 0
+shader = ExtResource("2_e0gec")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sea"]
-shading_mode = 0
-albedo_color = Color(0.09, 0.26, 0.33, 1)
+[sub_resource type="QuadMesh" id="QuadMesh_cloud"]
+size = Vector2(14, 7)
 
-[node name="SkyDemo" type="Node3D"]
+[node name="SkyDemo" type="Node3D" unique_id=1235475174]
+script = ExtResource("3_controller")
+sky_material = ExtResource("1_mat")
+sun_light_path = NodePath("Sun")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=405596727]
 environment = SubResource("Environment_demo")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 10, 0)
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1820496466]
+transform = Transform3D(-0.9396926, -0.13911216, 0.312451, 0, 0.9135454, 0.40673664, -0.3420202, 0.38220742, -0.8584519, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1475860628]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
-far = 4000.0
 
-[node name="HorizonPlane" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_sea")
-material_override = SubResource("StandardMaterial3D_sea")
+[node name="Cloud" type="MeshInstance3D" parent="." unique_id=167123279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 10, -32)
+material_override = SubResource("ShaderMaterial_5ry0t")
+mesh = SubResource("QuadMesh_cloud")

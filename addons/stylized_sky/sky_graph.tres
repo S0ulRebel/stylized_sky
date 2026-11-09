@@ -1,4 +1,102 @@
-[gd_resource type="VisualShader" format=3]
+[gd_resource type="VisualShader" format=3 uid="uid://civu4cu4sanrt"]
+
+[sub_resource type="VisualShaderNodeStep" id="Step_disc"]
+default_input_values = [0, 0.055, 1, 0.0]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="Invert_disc"]
+operator = 1
+default_input_values = [0, 1.0, 1, 0.0]
+
+[sub_resource type="VisualShaderNodeColorConstant" id="Color_sun"]
+constant = Color(0.96862745, 0.7607843, 0.5568628, 1)
+
+[sub_resource type="VisualShaderNodeMix" id="Mix_sun"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(1, 1, 1, 1), 2, Quaternion(0.5, 0.5, 0.5, 0.5)]
+op_type = 5
+
+[sub_resource type="VisualShaderNodeInput" id="Input_eye"]
+input_name = "eyedir"
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="Decompose_grad"]
+
+[sub_resource type="VisualShaderNodeFloatFunc" id="Saturate_t"]
+function = 18
+
+[sub_resource type="VisualShaderNodeColorConstant" id="Color_horizon"]
+constant = Color(0.0015327719, 0.46730685, 0.51175976, 1)
+
+[sub_resource type="VisualShaderNodeColorConstant" id="Color_zenith"]
+constant = Color(0.72855633, 0.8432361, 0.9999979, 1)
+
+[sub_resource type="VisualShaderNodeMix" id="Mix_gradient"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(1, 1, 1, 1), 2, Quaternion(0.5, 0.5, 0.5, 0.5)]
+op_type = 5
+
+[sub_resource type="VisualShaderNodeVec3Parameter" id="Param_sun_screen_position"]
+parameter_name = "sun_screen_position"
+default_value_enabled = true
+default_value = Vector3(0.633, 0.19, 0)
+
+[sub_resource type="VisualShaderNodeVectorOp" id="Center_sun"]
+operator = 1
+
+[sub_resource type="VisualShaderNodeVec3Parameter" id="Param_sun_screen_scale"]
+parameter_name = "sun_screen_scale"
+default_value_enabled = true
+default_value = Vector3(1.7777778, 1, 0)
+
+[sub_resource type="VisualShaderNodeVectorOp" id="Scale_sun"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorLen" id="Distance_sun"]
+
+[sub_resource type="VisualShaderNodeVec3Parameter" id="Param_camera_right"]
+parameter_name = "camera_right"
+default_value_enabled = true
+default_value = Vector3(1, 0, 0)
+
+[sub_resource type="VisualShaderNodeVec3Parameter" id="Param_camera_up"]
+parameter_name = "camera_up"
+default_value_enabled = true
+default_value = Vector3(0, 1, 0)
+
+[sub_resource type="VisualShaderNodeVec3Parameter" id="Param_camera_back"]
+parameter_name = "camera_back"
+default_value_enabled = true
+default_value = Vector3(0, 0, 1)
+
+[sub_resource type="VisualShaderNodeDotProduct" id="Dot_view_right"]
+
+[sub_resource type="VisualShaderNodeDotProduct" id="Dot_view_up"]
+
+[sub_resource type="VisualShaderNodeDotProduct" id="Dot_view_back"]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="Forward_depth"]
+operator = 1
+default_input_values = [0, 0.0, 1, 0.0]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="Divide_view_x"]
+operator = 3
+
+[sub_resource type="VisualShaderNodeFloatOp" id="Divide_view_y"]
+operator = 3
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="Compose_view"]
+
+[sub_resource type="VisualShaderNodeVec3Parameter" id="Param_projection_scale"]
+parameter_name = "camera_projection_scale"
+default_value_enabled = true
+default_value = Vector3(0.733, 1.303, 0)
+
+[sub_resource type="VisualShaderNodeVectorOp" id="Apply_projection"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorOp" id="Scale_to_uv"]
+operator = 2
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(0.5, -0.5, 0)]
+
+[sub_resource type="VisualShaderNodeVectorOp" id="Offset_uv"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(0.5, 0.5, 0)]
 
 [resource]
 resource_name = "Stylized Sky Graph"
@@ -7,3 +105,63 @@ flags/use_half_res_pass = false
 flags/use_quarter_res_pass = false
 flags/disable_fog = false
 flags/use_debanding = false
+nodes/sky/0/position = Vector2(256, 96)
+nodes/sky/2/node = SubResource("Input_eye")
+nodes/sky/2/position = Vector2(-2400, 64)
+nodes/sky/3/node = SubResource("Decompose_grad")
+nodes/sky/3/position = Vector2(-2176, -224)
+nodes/sky/4/node = SubResource("Saturate_t")
+nodes/sky/4/position = Vector2(-1952, -224)
+nodes/sky/5/node = SubResource("Color_horizon")
+nodes/sky/5/position = Vector2(-2176, -480)
+nodes/sky/6/node = SubResource("Color_zenith")
+nodes/sky/6/position = Vector2(-2176, -32)
+nodes/sky/7/node = SubResource("Mix_gradient")
+nodes/sky/7/position = Vector2(-1696, -224)
+nodes/sky/8/node = SubResource("Param_sun_screen_position")
+nodes/sky/8/position = Vector2(800, 544)
+nodes/sky/9/node = SubResource("Center_sun")
+nodes/sky/9/position = Vector2(1024, 320)
+nodes/sky/10/node = SubResource("Step_disc")
+nodes/sky/10/position = Vector2(1696, 320)
+nodes/sky/11/node = SubResource("Color_sun")
+nodes/sky/11/position = Vector2(2144, 480)
+nodes/sky/12/node = SubResource("Mix_sun")
+nodes/sky/12/position = Vector2(2336, 96)
+nodes/sky/14/node = SubResource("Param_sun_screen_scale")
+nodes/sky/14/position = Vector2(1024, 544)
+nodes/sky/15/node = SubResource("Scale_sun")
+nodes/sky/15/position = Vector2(1248, 320)
+nodes/sky/16/node = SubResource("Distance_sun")
+nodes/sky/16/position = Vector2(1472, 320)
+nodes/sky/17/node = SubResource("Invert_disc")
+nodes/sky/17/position = Vector2(1920, 320)
+nodes/sky/18/node = SubResource("Param_camera_right")
+nodes/sky/18/position = Vector2(-2400, 352)
+nodes/sky/19/node = SubResource("Param_camera_up")
+nodes/sky/19/position = Vector2(-2400, 608)
+nodes/sky/20/node = SubResource("Param_camera_back")
+nodes/sky/20/position = Vector2(-2400, 864)
+nodes/sky/21/node = SubResource("Dot_view_right")
+nodes/sky/21/position = Vector2(-1952, 352)
+nodes/sky/22/node = SubResource("Dot_view_up")
+nodes/sky/22/position = Vector2(-1952, 608)
+nodes/sky/23/node = SubResource("Dot_view_back")
+nodes/sky/23/position = Vector2(-1952, 864)
+nodes/sky/24/node = SubResource("Forward_depth")
+nodes/sky/24/position = Vector2(-1728, 864)
+nodes/sky/25/node = SubResource("Divide_view_x")
+nodes/sky/25/position = Vector2(-1472, 352)
+nodes/sky/26/node = SubResource("Divide_view_y")
+nodes/sky/26/position = Vector2(-1472, 608)
+nodes/sky/27/node = SubResource("Compose_view")
+nodes/sky/27/position = Vector2(-1248, 480)
+nodes/sky/28/node = SubResource("Param_projection_scale")
+nodes/sky/28/position = Vector2(-1248, 736)
+nodes/sky/29/node = SubResource("Apply_projection")
+nodes/sky/29/position = Vector2(-800, 480)
+nodes/sky/30/node = SubResource("Scale_to_uv")
+nodes/sky/30/position = Vector2(-576, 480)
+nodes/sky/31/node = SubResource("Offset_uv")
+nodes/sky/31/position = Vector2(-352, 480)
+nodes/sky/connections = PackedInt32Array(2, 0, 3, 0, 3, 1, 4, 0, 5, 0, 7, 0, 6, 0, 7, 1, 4, 0, 7, 2, 2, 0, 21, 0, 18, 0, 21, 1, 2, 0, 22, 0, 19, 0, 22, 1, 2, 0, 23, 0, 20, 0, 23, 1, 23, 0, 24, 1, 21, 0, 25, 0, 24, 0, 25, 1, 22, 0, 26, 0, 24, 0, 26, 1, 25, 0, 27, 0, 26, 0, 27, 1, 27, 0, 29, 0, 28, 0, 29, 1, 29, 0, 30, 0, 30, 0, 31, 0, 31, 0, 9, 0, 8, 0, 9, 1, 9, 0, 15, 0, 14, 0, 15, 1, 15, 0, 16, 0, 16, 0, 10, 1, 10, 0, 17, 1, 7, 0, 12, 0, 11, 0, 12, 1, 17, 0, 12, 2, 12, 0, 0, 0)
